@@ -24,8 +24,12 @@ namespace DealerPortalApp
 
             builder.Services.AddScoped<IRepository<int, Applicant>, ApplicantRepository>();
             builder.Services.AddScoped<IApplicantService, ApplicantService>();
-        
-        var app = builder.Build();
+            builder.Services.AddScoped<IRepository<int, Vendor>, VendorRepository>();
+            builder.Services.AddScoped<IVendorService, VendorService>();
+            builder.Services.AddScoped<IRepository<int, Loan>, LoanRepository>();
+            builder.Services.AddScoped<ILoanService, LoanService>();
+
+            var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

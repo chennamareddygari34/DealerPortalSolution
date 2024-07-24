@@ -23,8 +23,7 @@ public partial class DealerPortalContext : DbContext
     public virtual DbSet<Vendor> Vendors { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Name=DevConnection");
+        => optionsBuilder.UseSqlServer("Name=ConnectionStrings:DevConnection");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -50,9 +49,11 @@ public partial class DealerPortalContext : DbContext
 
             entity.Property(e => e.LoanId).HasColumnName("LoanID");
             entity.Property(e => e.ApplicantId).HasColumnName("ApplicantID");
+            entity.Property(e => e.ApplicationDate)
+                .HasColumnType("datetime")
+                .HasColumnName("Application Date");
             entity.Property(e => e.LastUpdate).HasColumnType("datetime");
             entity.Property(e => e.LoanAmount).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.LoanDate).HasColumnType("datetime");
             entity.Property(e => e.Status)
                 .HasMaxLength(50)
                 .IsUnicode(false);

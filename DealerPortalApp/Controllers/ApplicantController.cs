@@ -41,7 +41,7 @@ namespace DealerPortalApp.Controllers
             return Ok(applicantDTO);
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public ActionResult<List<ApplicantDTO>> GetAllApplicants()
         {
             var applicants = _applicantService.GetAllApplicants();
