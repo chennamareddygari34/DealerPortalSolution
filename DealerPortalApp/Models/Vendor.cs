@@ -19,5 +19,11 @@ public partial class Vendor
 
     public string? Make { get; set; }
 
-    public virtual ICollection<Loan> Loans { get; set; } = new List<Loan>();
+    public int? LoanId { get; set; }
+
+    public int? ApplicantId { get; set; }
+
+    public virtual Applicant? Applicant { get; set; }
+
+    public virtual Loan? Loan { get; set; }
 }

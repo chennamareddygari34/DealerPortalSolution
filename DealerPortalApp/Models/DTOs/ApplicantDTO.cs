@@ -3,9 +3,14 @@
     public class ApplicantDTO
     {
         public int ApplicantId { get; set; }
-        public string? ApplicantName { get; set; } 
-        public string? Email { get; set; } 
+
+        public string ApplicantName { get; set; } = null!;
+
+        public string Email { get; set; } = null!;
+
         public string? Phone { get; set; }
-        public ICollection<LoanDTO> Loans { get; set; } = new List<LoanDTO>();
+        
+
+
     }
 }

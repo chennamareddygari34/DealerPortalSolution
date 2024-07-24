@@ -17,6 +17,18 @@ namespace DealerPortalApp.Controllers
             _loanService = loanService;
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<LoanDTO> GetLoanById(int id)
+        {
+            var loanDTO = _loanService.GetLoanById(id);
+            if (loanDTO == null)
+            {
+                return NotFound($"Loan with ID {id} not found.");
+            }
+
+            return Ok(loanDTO);
+        }
+
         [HttpPost]
         public ActionResult<LoanDTO> AddLoan([FromBody] LoanDTO loanDTO)
         {
@@ -46,18 +58,6 @@ namespace DealerPortalApp.Controllers
         {
             var loans = _loanService.GetAllLoans();
             return Ok(loans);
-        }
-
-        [HttpGet("{id}")]
-        public ActionResult<LoanDTO> GetLoanById(int id)
-        {
-            var loanDTO = _loanService.GetLoanById(id);
-            if (loanDTO == null)
-            {
-                return NotFound($"Loan with ID {id} not found.");
-            }
-
-            return Ok(loanDTO);
         }
 
         [HttpPut("{id}")]

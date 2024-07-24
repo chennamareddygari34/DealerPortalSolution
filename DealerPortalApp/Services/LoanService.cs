@@ -1,40 +1,44 @@
 ﻿using DealerPortalApp.Interfaces;
 using DealerPortalApp.Models;
 using DealerPortalApp.Models.DTOs;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace DealerPortalApp.Services
 {
     public class LoanService : ILoanService
     {
         private readonly IRepository<int, Loan> _loanRepository;
-        public LoanService(IRepository<int, Loan> loanRepository)
+        private readonly IRepository<int, Applicant> _applicantRepository;
+
+        public LoanService(IRepository<int, Loan> loanRepository, IRepository<int, Applicant> applicantRepository)
         {
             _loanRepository = loanRepository;
+            _applicantRepository = applicantRepository;
         }
 
         public LoanDTO AddLoan(LoanDTO loanDTO)
         {
             var loan = new Loan
             {
-                LoanId = loanDTO.LoanId,
-                VendorId = loanDTO.VendorId,
                 ApplicantId = loanDTO.ApplicantId,
-                LoanAmount =(Decimal) loanDTO.LoanAmount,
-                ApplicationDate = (DateTime) loanDTO.ApplicationDate,
+                LoanAmount = loanDTO.LoanAmount,
+                ApplicationDate = loanDTO.ApplicationDate,
                 Status = loanDTO.Status,
                 LastUpdate = loanDTO.LastUpdate
             };
+
             _loanRepository.Add(loan);
+
             return new LoanDTO
             {
                 LoanId = loan.LoanId,
-                VendorId = loan.VendorId,
                 ApplicantId = loan.ApplicantId,
                 LoanAmount = loan.LoanAmount,
                 ApplicationDate = loan.ApplicationDate,
                 Status = loan.Status,
                 LastUpdate = loan.LastUpdate,
-                
+                Applicant = GetApplicantDTO(loan.ApplicantId)
             };
         }
 
@@ -48,16 +52,16 @@ namespace DealerPortalApp.Services
             }
 
             _loanRepository.Delete(loanId);
+
             return new LoanDTO
             {
                 LoanId = loan.LoanId,
-                VendorId = loan.VendorId,
                 ApplicantId = loan.ApplicantId,
                 LoanAmount = loan.LoanAmount,
                 ApplicationDate = loan.ApplicationDate,
                 Status = loan.Status,
                 LastUpdate = loan.LastUpdate,
-               
+                Applicant = GetApplicantDTO(loan.ApplicantId)
             };
         }
 
@@ -67,13 +71,12 @@ namespace DealerPortalApp.Services
                                        .Select(loan => new LoanDTO
                                        {
                                            LoanId = loan.LoanId,
-                                           VendorId = loan.VendorId,
                                            ApplicantId = loan.ApplicantId,
                                            LoanAmount = loan.LoanAmount,
                                            ApplicationDate = loan.ApplicationDate,
                                            Status = loan.Status,
                                            LastUpdate = loan.LastUpdate,
-                                          
+                                           Applicant = GetApplicantDTO(loan.ApplicantId)
                                        }).ToList();
 
             return loans;
@@ -91,13 +94,12 @@ namespace DealerPortalApp.Services
             return new LoanDTO
             {
                 LoanId = loan.LoanId,
-                VendorId = loan.VendorId,
                 ApplicantId = loan.ApplicantId,
                 LoanAmount = loan.LoanAmount,
                 ApplicationDate = loan.ApplicationDate,
                 Status = loan.Status,
                 LastUpdate = loan.LastUpdate,
-               
+                Applicant = GetApplicantDTO(loan.ApplicantId)
             };
         }
 
@@ -110,10 +112,9 @@ namespace DealerPortalApp.Services
                 return null;
             }
 
-            loan.VendorId = loanDTO.VendorId;
             loan.ApplicantId = loanDTO.ApplicantId;
-            loan.LoanAmount = (decimal)loanDTO.LoanAmount;
-            loan.ApplicationDate = (DateTime)loanDTO.ApplicationDate;
+            loan.LoanAmount = loanDTO.LoanAmount;
+            loan.ApplicationDate = loanDTO.ApplicationDate;
             loan.Status = loanDTO.Status;
             loan.LastUpdate = loanDTO.LastUpdate;
 
@@ -122,14 +123,28 @@ namespace DealerPortalApp.Services
             return new LoanDTO
             {
                 LoanId = loan.LoanId,
-                VendorId = loan.VendorId,
                 ApplicantId = loan.ApplicantId,
                 LoanAmount = loan.LoanAmount,
                 ApplicationDate = loan.ApplicationDate,
                 Status = loan.Status,
                 LastUpdate = loan.LastUpdate,
-                
+                Applicant = GetApplicantDTO(loan.ApplicantId)
+            };
+        }
+
+        private ApplicantDTO GetApplicantDTO(int applicantId)
+        {
+            var applicant = _applicantRepository.Get(applicantId);
+            if (applicant == null) return null;
+
+            return new ApplicantDTO
+            {
+                ApplicantId = applicant.ApplicantId,
+                ApplicantName = applicant.ApplicantName,
+                Email = applicant.Email,
+                Phone = applicant.Phone
             };
         }
     }
 }
+

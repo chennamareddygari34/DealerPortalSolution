@@ -7,8 +7,6 @@ public partial class Loan
 {
     public int LoanId { get; set; }
 
-    public int VendorId { get; set; }
-
     public int ApplicantId { get; set; }
 
     public decimal LoanAmount { get; set; }
@@ -21,5 +19,5 @@ public partial class Loan
 
     public virtual Applicant Applicant { get; set; } = null!;
 
-    public virtual Vendor Vendor { get; set; } = null!;
+    public virtual ICollection<Vendor> Vendors { get; set; } = new List<Vendor>();
 }
