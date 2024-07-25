@@ -27,7 +27,7 @@ namespace DealerPortalApp.Controllers
             return Ok(vendorDetails);
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public ActionResult<List<VendorDTO>> GetAllVendors()
         {
             var vendors = _vendorService.GetAllVendors();

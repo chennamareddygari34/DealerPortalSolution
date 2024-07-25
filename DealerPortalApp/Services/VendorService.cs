@@ -171,6 +171,7 @@ namespace DealerPortalApp.Services
                 ApplicantId = applicant?.ApplicantId,
                 Applicant = applicant?.ApplicantName,
                 ApplicantDate = loan?.ApplicationDate,
+                VendorName = vendor?.VendorName,
                 Year = vendor.Year,
                 Make = vendor.Make,
                 Model = vendor.Model,

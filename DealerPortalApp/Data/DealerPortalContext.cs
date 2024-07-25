@@ -20,10 +20,12 @@ public partial class DealerPortalContext : DbContext
 
     public virtual DbSet<Loan> Loans { get; set; }
 
+    public virtual DbSet<User> Users { get; set; }
+
     public virtual DbSet<Vendor> Vendors { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Name=DevConnection");
+        => optionsBuilder.UseSqlServer("Name=ConnectionStrings:DevConnection");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -60,6 +62,15 @@ public partial class DealerPortalContext : DbContext
                 .HasForeignKey(d => d.ApplicantId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Loans__Applicant__4E88ABD4");
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.UserId).HasName("PK__User__1788CC4C6C349774");
+
+            entity.ToTable("User");
+
+            entity.Property(e => e.UserName).HasMaxLength(100);
         });
 
         modelBuilder.Entity<Vendor>(entity =>

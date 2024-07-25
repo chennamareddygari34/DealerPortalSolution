@@ -1,6 +1,8 @@
-﻿using DealerPortalApp.Interfaces;
+﻿using DealerPortalAPI.Queries;
+using DealerPortalApp.Interfaces;
 using DealerPortalApp.Models.DTOs;
 using DealerPortalApp.Services;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -11,11 +13,37 @@ namespace DealerPortalApp.Controllers
     public class LoanController : ControllerBase
     {
         private readonly ILoanService _loanService;
+        private readonly IMediator _mediator;
 
-        public LoanController(ILoanService loanService)
+
+        public LoanController(ILoanService loanService, IMediator mediator)
         {
             _loanService = loanService;
+            _mediator = mediator;
+
         }
+        //[HttpGet]
+        //public async Task<IActionResult> Get()
+        //{
+        //    var loans = await _mediator.Send(new GetLoansQuery());
+        //    return Ok(loans);
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> Post([FromBody] CreateLoanCommand command)
+        //{
+        //    var loanId = await _mediator.Send(command);
+        //    return CreatedAtAction(nameof(GetById), new { id = loanId }, command.Loan);
+        //}
+
+        //[HttpGet("{Loanid}")]
+        //public async Task<IActionResult> GetById(int id)
+        //{
+        //    var loan = await _mediator.Send(new GetLoanByIdQuery { LoanId = id });
+        //    if (loan == null)
+        //        return NotFound();
+        //    return Ok(loan);
+        //}
 
         [HttpGet("{id}")]
         public ActionResult<LoanDTO> GetLoanById(int id)
