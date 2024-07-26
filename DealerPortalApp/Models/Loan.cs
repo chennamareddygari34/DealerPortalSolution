@@ -17,7 +17,5 @@ public partial class Loan
 
     public DateTime? LastUpdate { get; set; }
 
-    public virtual Applicant Applicant { get; set; } = null!;
-
     public virtual ICollection<Vendor> Vendors { get; set; } = new List<Vendor>();
 }

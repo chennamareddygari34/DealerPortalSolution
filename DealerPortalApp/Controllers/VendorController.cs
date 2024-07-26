@@ -27,7 +27,19 @@ namespace DealerPortalApp.Controllers
             return Ok(vendorDetails);
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("details/all")]
+        public ActionResult<List<VendorDetailsDTO>> GetVendorDetailsAll()
+        {
+            var vendorDetails = _vendorService.GetVendorDetailsAll();
+            if (vendorDetails == null || !vendorDetails.Any())
+            {
+                return NotFound("No vendor details found.");
+            }
+            return Ok(vendorDetails);
+        }
+
+
+                [HttpGet("GetAll")]
         public ActionResult<List<VendorDTO>> GetAllVendors()
         {
             var vendors = _vendorService.GetAllVendors();

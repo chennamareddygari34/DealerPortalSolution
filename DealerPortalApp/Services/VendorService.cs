@@ -151,7 +151,7 @@ namespace DealerPortalApp.Services
                 ApplicationDate = loan.ApplicationDate,
                 Status = loan.Status,
                 LastUpdate = loan.LastUpdate,
-                Applicant = GetApplicantDTO(loan.ApplicantId)
+                //Applicant = GetApplicantDTO(loan.ApplicantId)
             };
         }
 
@@ -179,9 +179,37 @@ namespace DealerPortalApp.Services
                 LastUpdate = loan?.LastUpdate
             };
         }
+        public List<VendorDetailsDTO> GetVendorDetailsAll()
+        {
+            var vendors = _vendorRepository.GetAll();
+            var loans = _loanRepository.GetAll().ToList();
+            var applicants = _applicantRepository.GetAll().ToList();
 
+            var vendorDetailsList = vendors.Select(vendor =>
+            {
+                var loan = loans.FirstOrDefault(l => l.ApplicantId == vendor.VendorId);
+                var applicant = loan != null ? applicants.FirstOrDefault(a => a.ApplicantId == loan.ApplicantId) : null;
 
+                return new VendorDetailsDTO
+                {
+                    ApplicantId = applicant?.ApplicantId,
+                    Applicant = applicant?.ApplicantName,
+                    ApplicantDate = loan?.ApplicationDate,
+                    VendorName = vendor?.VendorName,
+                    Year = vendor.Year,
+                    Make = vendor.Make,
+                    Model = vendor.Model,
+                    Status = loan?.Status,
+                    LastUpdate = loan?.LastUpdate
+                };
+            }).ToList();
 
+            return vendorDetailsList;
+        }
     }
 
+
+
 }
+
+

@@ -13,7 +13,5 @@ public partial class Applicant
 
     public string? Phone { get; set; }
 
-    public virtual ICollection<Loan> Loans { get; set; } = new List<Loan>();
-
     public virtual ICollection<Vendor> Vendors { get; set; } = new List<Vendor>();
 }

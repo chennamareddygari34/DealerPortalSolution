@@ -15,11 +15,11 @@ namespace DealerPortalAPI.Handlers.QueryHandlers
             _context = context;
         }
 
+
+
         public async Task<Loan> Handle(GetLoanByIdQuery request, CancellationToken cancellationToken)
         {
-            return await _context.Loans
-                .Include(l => l.Applicant)
-                .FirstOrDefaultAsync(l => l.LoanId == request.LoanId, cancellationToken);
+            return await _context.Loans.FirstOrDefaultAsync(l => l.LoanId == request.LoanId, cancellationToken);
         }
     }
 }

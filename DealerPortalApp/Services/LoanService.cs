@@ -38,7 +38,7 @@ namespace DealerPortalApp.Services
                 ApplicationDate = loan.ApplicationDate,
                 Status = loan.Status,
                 LastUpdate = loan.LastUpdate,
-                Applicant = GetApplicantDTO(loan.ApplicantId)
+               // Applicant = GetApplicantDTO(loan.ApplicantId)
             };
         }
 
@@ -61,7 +61,7 @@ namespace DealerPortalApp.Services
                 ApplicationDate = loan.ApplicationDate,
                 Status = loan.Status,
                 LastUpdate = loan.LastUpdate,
-                Applicant = GetApplicantDTO(loan.ApplicantId)
+              //  Applicant = GetApplicantDTO(loan.ApplicantId)
             };
         }
 
@@ -128,7 +128,7 @@ namespace DealerPortalApp.Services
                 ApplicationDate = loan.ApplicationDate,
                 Status = loan.Status,
                 LastUpdate = loan.LastUpdate,
-                Applicant = GetApplicantDTO(loan.ApplicantId)
+              //  Applicant = GetApplicantDTO(loan.ApplicantId)
             };
         }
 
