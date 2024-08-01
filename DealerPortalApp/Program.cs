@@ -1,3 +1,4 @@
+using BankLoanManagement.Services;
 using DealerPortalApp.Data;
 using DealerPortalApp.Interfaces;
 using DealerPortalApp.Models;
@@ -38,6 +39,10 @@ namespace DealerPortalApp
             builder.Services.AddScoped<IVendorService, VendorService>();
             builder.Services.AddScoped<IRepository<int, Loan>, LoanRepository>();
             builder.Services.AddScoped<ILoanService, LoanService>();
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IRepository<string, User>, UserRepository>();
+            builder.Services.AddScoped<ITokenService, TokenService>();
+
 
             builder.Services.AddCors(opts =>
             {
@@ -66,3 +71,4 @@ namespace DealerPortalApp
         }
     }
 }
+
