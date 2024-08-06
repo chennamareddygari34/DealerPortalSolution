@@ -155,6 +155,7 @@ namespace DealerPortalApp.Services
             };
         }
 
+    
         public VendorDetailsDTO GetVendorDetails(int vendorId)
         {
             var vendor = _vendorRepository.Get(vendorId);
@@ -163,7 +164,7 @@ namespace DealerPortalApp.Services
                 return null;
             }
 
-            var loan = _loanRepository.GetAll().FirstOrDefault(l => l.ApplicantId == vendor.VendorId);
+            var loan = _loanRepository.GetAll().FirstOrDefault(l => l.LoanId == vendor.LoanId);
             var applicant = loan != null ? _applicantRepository.Get(loan.ApplicantId) : null;
 
             return new VendorDetailsDTO
@@ -187,7 +188,7 @@ namespace DealerPortalApp.Services
 
             var vendorDetailsList = vendors.Select(vendor =>
             {
-                var loan = loans.FirstOrDefault(l => l.ApplicantId == vendor.VendorId);
+                var loan = loans.FirstOrDefault(l => l.LoanId == vendor.LoanId);
                 var applicant = loan != null ? applicants.FirstOrDefault(a => a.ApplicantId == loan.ApplicantId) : null;
 
                 return new VendorDetailsDTO
@@ -206,6 +207,9 @@ namespace DealerPortalApp.Services
 
             return vendorDetailsList;
         }
+
+
+        
     }
 
 

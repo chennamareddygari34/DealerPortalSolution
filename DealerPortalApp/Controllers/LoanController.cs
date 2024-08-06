@@ -36,38 +36,38 @@ namespace DealerPortalApp.Controllers
         //    return CreatedAtAction(nameof(GetById), new { id = loanId }, command.Loan);
         //}
 
-        //[HttpGet("{Loanid}")]
-        //public async Task<IActionResult> GetById(int id)
+        [HttpGet("{Loanid}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var loan = await _mediator.Send(new GetLoanByIdQuery { LoanId = id });
+            if (loan == null)
+                return NotFound();
+            return Ok(loan);
+        }
+
+        //[HttpGet("{id}")]
+        //public ActionResult<LoanDTO> GetLoanById(int id)
         //{
-        //    var loan = await _mediator.Send(new GetLoanByIdQuery { LoanId = id });
-        //    if (loan == null)
-        //        return NotFound();
-        //    return Ok(loan);
+        //    var loanDTO = _loanService.GetLoanById(id);
+        //    if (loanDTO == null)
+        //    {
+        //        return NotFound($"Loan with ID {id} not found.");
+        //    }
+
+        //    return Ok(loanDTO);
         //}
 
-        [HttpGet("{id}")]
-        public ActionResult<LoanDTO> GetLoanById(int id)
-        {
-            var loanDTO = _loanService.GetLoanById(id);
-            if (loanDTO == null)
-            {
-                return NotFound($"Loan with ID {id} not found.");
-            }
+        //[HttpPost]
+        //public ActionResult<LoanDTO> AddLoan([FromBody] LoanDTO loanDTO)
+        //{
+        //    if (loanDTO == null)
+        //    {
+        //        return BadRequest("Loan data is null.");
+        //    }
 
-            return Ok(loanDTO);
-        }
-
-        [HttpPost]
-        public ActionResult<LoanDTO> AddLoan([FromBody] LoanDTO loanDTO)
-        {
-            if (loanDTO == null)
-            {
-                return BadRequest("Loan data is null.");
-            }
-
-            var createdLoan = _loanService.AddLoan(loanDTO);
-            return CreatedAtAction(nameof(GetLoanById), new { id = createdLoan.LoanId }, createdLoan);
-        }
+        //    var createdLoan = _loanService.AddLoan(loanDTO);
+        //    return CreatedAtAction(nameof(GetLoanById), new { id = createdLoan.LoanId }, createdLoan);
+        //}
 
         [HttpDelete("{id}")]
         public ActionResult<LoanDTO> DeleteLoanById(int id)
